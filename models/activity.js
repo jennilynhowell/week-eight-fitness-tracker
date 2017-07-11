@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const activitySchema = new mongoose.Schema({
-    name: {type: String, unique: true, required: true},
+    name: {type: String, required: true},
     stats: [{
-      day: {type: Date, required: true},
+      day: {type: Date, required: true, default: Date.now},
       number: {type: Number, required: true},
       units: {type: String, required: true}
     }],
