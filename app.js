@@ -46,9 +46,19 @@ app.get('/api/activities', passport.authenticate('basic', {session: false}), con
 app.post('/api/activities', passport.authenticate('basic', {session: false}), controllers.newActivity);
 
 // GET	/activities/{id}	Show information about one activity I am tracking, and give me the data I have recorded for that activity.
+//WORKS
+app.get('/api/activities/:id', passport.authenticate('basic', {session: false}), controllers.viewActivity);
+
 // PUT	/activities/{id}	Update one activity I am tracking, changing attributes such as name or type. Does not allow for changing tracked data.
+//NOTE: USING PATCH here as I do not wish to overwrite the entire document
+app.patch('/api/activities/:id', passport.authenticate('basic', {session: false}), controllers.updateActivity);
+
 // DELETE	/activities/{id}	Delete one activity I am tracking. This should remove tracked data for that activity as well.
+app.delete('/api/activities/:id', passport.authenticate('basic', {session: false}), controllers.deleteActivity);
+
 // POST	/activities/{id}/stats	Add tracked data for a day. The data sent with this should include the day tracked. You can also override the data for a day already recorded.
+app.post('/api/activities/:id/stats', passport.authenticate('basic', {session: false}), controllers.addStats);
+
 // DELETE	/stats/{id}	Remove tracked data for a day.
 
 
