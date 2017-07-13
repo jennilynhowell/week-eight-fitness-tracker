@@ -32,11 +32,6 @@ passport.use(new BasicStrategy(
   }
 ));
 
-// app.use((req, res, next) => {
-//   passport.authenticate('basic', {session: false});
-//   next();
-// });
-
 // GET	/activities	Show a list of all activities I am tracking, and links to their individual pages
 //WORKS
 app.get('/api/activities', passport.authenticate('basic', {session: false}), controllers.activities);
@@ -56,13 +51,11 @@ app.patch('/api/activities/:id', passport.authenticate('basic', {session: false}
 // DELETE	/activities/{id}	Delete one activity I am tracking. This should remove tracked data for that activity as well.
 app.delete('/api/activities/:id', passport.authenticate('basic', {session: false}), controllers.deleteActivity);
 
-// POST	/activities/{id}/stats	Add tracked data for a day. The data sent with this should include the day tracked. You can also override the data for a day already recorded.
+// POST	/activities/{id}/stats	Add tracked data for a day. The data sent with this should include the day tracked. You can also override the data for a day already recorded.(override data would require patch, no??)
 app.post('/api/activities/:id/stats', passport.authenticate('basic', {session: false}), controllers.addStats);
 
 // DELETE	/stats/{id}	Remove tracked data for a day.
-
-
-
+app.delete('/api/stats/:id', passport.authenticate('basic', {session: false}), controllers.deleteStats);
 
 
 

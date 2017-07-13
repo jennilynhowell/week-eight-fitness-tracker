@@ -69,13 +69,28 @@ module.exports = {
       , units = req.body.units;
 
     Activity.findById(_id).then(activity => {
-      activity.stats.day = day;
-      activity.stats.number = number;
-      activity.stats.units = units;
+      activity.stats.push({
+        day: day,
+        number: number,
+        units: units
+      });
       activity.save();
       res.json(activity);
     });
   },
+
+  //remove set of stats
+  //help with this at https://stackoverflow.com/questions/31105057/trying-to-remove-a-nested-object-in-mongoose
+  deleteStats: (req, res) => {
+    let _id = req.params.id
+      , statId = req.body.statId;
+
+    Activity.update({_id: _id}, {
+      $pull: {stats: {_id: statId}},
+    }).then(activity => {
+      res.json(activity);
+    });
+  }
 
   //end controller
 };
